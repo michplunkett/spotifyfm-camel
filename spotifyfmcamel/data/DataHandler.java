@@ -5,11 +5,7 @@
  */
 package spotifyfmcamel.data;
 
-import javax.xml.crypto.Data;
-
 public abstract class DataHandler {
 
   abstract void readInData();
-
-  abstract DataHandler getInstance();
 }
