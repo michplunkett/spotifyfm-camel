@@ -1,27 +1,59 @@
-/**
- * SpotifyAudioFeatures.java This class represents the JSON structures present in the
- * spotifyIDToAudioFeatures.json file.
- */
+/** This class represents the JSON structures present in the spotifyIDToAudioFeatures.json file. */
 package spotifyfmcamel.data.pojos;
+
+import com.google.gson.annotations.SerializedName;
 
 // Generated with https://www.jsonschema2pojo.org/
 public class SpotifyAudioFeatures {
+  @SerializedName("acousticness")
   private float acousticness;
+
+  @SerializedName("analysis_url")
   private String analysisUrl;
+
+  @SerializedName("danceability")
   private float danceability;
+
+  @SerializedName("duration_ms")
   private int durationMs;
+
+  @SerializedName("energy")
   private float energy;
+
+  @SerializedName("id")
   private String id;
+
+  @SerializedName("instrumentalness")
   private float instrumentalness;
+
+  @SerializedName("key")
   private int key;
+
+  @SerializedName("liveness")
   private float liveness;
+
+  @SerializedName("loudness")
   private float loudness;
+
+  @SerializedName("mode")
   private int mode;
+
+  @SerializedName("speechiness")
   private float speechiness;
+
+  @SerializedName("tempo")
   private float tempo;
+
+  @SerializedName("time_signature")
   private int timeSignature;
+
+  @SerializedName("track_href")
   private String trackHref;
+
+  @SerializedName("uri")
   private String uri;
+
+  @SerializedName("valence")
   private float valence;
 
   public float getAcousticness() {

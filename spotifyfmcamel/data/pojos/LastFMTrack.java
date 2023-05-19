@@ -1,6 +1,6 @@
 /**
- * LastFMTrack.java
- * This class represents the JSON structures present in the lastFMTrackListing.json file.
+ * This class represents the JSON structures present in the lastFMTrackListing.json
+ * file.
  */
 package spotifyfmcamel.data.pojos;
 
@@ -10,16 +10,22 @@ import com.google.gson.annotations.SerializedName;
 public class LastFMTrack {
   @SerializedName("AlbumName")
   private String albumName;
+
   @SerializedName("Artist")
   private String artist;
+
   @SerializedName("ArtistUUID")
   private String artistUUID;
+
   @SerializedName("Duration")
   private int duration;
+
   @SerializedName("ListenDate")
   private String listenDate;
+
   @SerializedName("LowerCaseArtist")
   private String lowerCaseArtist;
+
   @SerializedName("Name")
   private String name;
 
