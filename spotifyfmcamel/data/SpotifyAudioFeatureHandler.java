@@ -39,9 +39,8 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
 
-      Type gsonMap = new TypeToken<HashMap<String, Integer>>() {}.getType();
+      Type gsonMap = new TypeToken<HashMap<String, SpotifyAudioFeatures>>() {}.getType();
       audioFeaturesMap = gson.fromJson(jsonString, gsonMap);
-      System.out.println();
     } catch (FileNotFoundException e) {
       System.out.println(e.getStackTrace());
       throw new RuntimeException(e);
