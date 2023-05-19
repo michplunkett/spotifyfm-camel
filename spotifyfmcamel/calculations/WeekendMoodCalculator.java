@@ -4,4 +4,20 @@
  */
 package spotifyfmcamel.calculations;
 
-public class WeekendMoodCalculator implements MoodCalculator {}
+import java.util.ArrayList;
+import spotifyfmcamel.message.SpotifyFMMessage;
+
+public class WeekendMoodCalculator extends MoodCalculatorStrategy {
+  final String durationString = "Weekends in ";
+
+  void calculate(ArrayList<SpotifyFMMessage> messages, String year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
+    double[] metrics = calculateMood(relevantMessages);
+    printCalculation(durationString + year, metrics[0], metrics[1]);
+  }
+
+  public ArrayList<SpotifyFMMessage> getRelevantMessages(
+      ArrayList<SpotifyFMMessage> messages, String year) {
+    
+  }
+}
