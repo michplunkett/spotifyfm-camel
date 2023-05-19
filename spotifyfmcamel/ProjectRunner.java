@@ -1,4 +1,4 @@
-package src.main.java.spotifyfmcamel;
+package spotifyfmcamel;
 
 public class ProjectRunner {
   public static void main(String args[]) throws Exception {
