@@ -4,18 +4,24 @@
  */
 package spotifyfmcamel.data.pojos;
 
+import com.google.gson.annotations.SerializedName;
+
 // Generated with https://www.jsonschema2pojo.org/
 public class LastFMTrack {
+  @SerializedName("AlbumName")
   private String albumName;
+  @SerializedName("Artist")
   private String artist;
+  @SerializedName("ArtistUUID")
   private String artistUUID;
+  @SerializedName("Duration")
   private int duration;
+  @SerializedName("ListenDate")
   private String listenDate;
+  @SerializedName("LowerCaseArtist")
   private String lowerCaseArtist;
+  @SerializedName("Name")
   private String name;
-  private int playCount;
-  private int rank;
-  private String spotifyID;
 
   public String getAlbumName() {
     return albumName;
@@ -71,29 +77,5 @@ public class LastFMTrack {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public int getPlayCount() {
-    return playCount;
-  }
-
-  public void setPlayCount(int playCount) {
-    this.playCount = playCount;
-  }
-
-  public int getRank() {
-    return rank;
-  }
-
-  public void setRank(int rank) {
-    this.rank = rank;
-  }
-
-  public String getSpotifyID() {
-    return spotifyID;
-  }
-
-  public void setSpotifyID(String spotifyID) {
-    this.spotifyID = spotifyID;
   }
 }
