@@ -4,20 +4,53 @@
  */
 package spotifyfmcamel.calculations;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import spotifyfmcamel.message.SpotifyFMMessage;
+import spotifyfmcamel.message.SpotifyFMMessageIterator;
 
 public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
-  final String durationString = "Workdays in ";
+  final String unitPrintString = "Workdays in ";
+  final LocalTime workStart = LocalTime.parse("09:00:00");
+  final LocalTime workEnd = LocalTime.parse("17:00:00");
+  final ArrayList<DayOfWeek> weekdays =
+      new ArrayList<>(
+          Arrays.asList(
+              DayOfWeek.MONDAY,
+              DayOfWeek.TUESDAY,
+              DayOfWeek.WEDNESDAY,
+              DayOfWeek.THURSDAY,
+              DayOfWeek.FRIDAY));
 
-  void calculate(ArrayList<SpotifyFMMessage> messages, String year) {
+  public static boolean isBetween(LocalTime testListenTime) {
+    final LocalTime workStart = LocalTime.parse("09:00:00");
+    final LocalTime workEnd = LocalTime.parse("17:00:00");
+    return workStart.isAfter(testListenTime) && workEnd.isBefore(testListenTime);
+  }
+
+  void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    double[] metrics = calculateMood(relevantMessages);
-    printCalculation(durationString + year, metrics[0], metrics[1]);
+    float[] metrics = calculateMood(relevantMessages);
+    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
   }
 
   public ArrayList<SpotifyFMMessage> getRelevantMessages(
-      ArrayList<SpotifyFMMessage> messages, String year) {
+      ArrayList<SpotifyFMMessage> messages, int year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
+    SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
+    while (iterator.hasNext()) {
+      SpotifyFMMessage m = iterator.next();
+      LocalDateTime listenDateTime = m.getListenDateTime();
+      if (listenDateTime.getYear() == year
+          && weekdays.contains(listenDateTime.getDayOfWeek())
+          && isBetween(listenDateTime.toLocalTime())) {
+        relevantMessages.add(m);
+      }
+    }
 
+    return relevantMessages;
   }
 }
