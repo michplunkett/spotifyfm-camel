@@ -14,26 +14,26 @@ public abstract class MoodCalculatorStrategy {
   abstract ArrayList<SpotifyFMMessage> getRelevantMessages(
       ArrayList<SpotifyFMMessage> messages, String year);
 
-  public double[] calculateMood(ArrayList<SpotifyFMMessage> messages) {
-    double sum = 0.0;
-    final double meanDiffs = 0.0;
+  public float[] calculateMood(ArrayList<SpotifyFMMessage> messages) {
+    float sum = 0.0F;
+    float meanDiffs = 0.0F;
     int length = messages.size();
 
     for (SpotifyFMMessage m : messages) {
       sum += m.getValence();
     }
 
-    double mean = sum / length;
+    float mean = (sum / length);
 
     for (SpotifyFMMessage m : messages) {
       meanDiffs += Math.pow(m.getValence() - mean, 2);
     }
-    double standardDeviation = Math.sqrt(meanDiffs / length);
+    float standardDeviation = (float) Math.sqrt(meanDiffs / length);
 
-    return new double[] {mean, standardDeviation};
+    return new float[] {mean, standardDeviation};
   }
 
-  public void printCalculation(String durationString, double mean, double standardDeviation) {
+  public void printCalculation(String durationString, float mean, float standardDeviation) {
     System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
     System.out.printf(
         "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
