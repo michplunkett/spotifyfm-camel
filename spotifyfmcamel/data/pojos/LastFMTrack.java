@@ -6,7 +6,6 @@ package spotifyfmcamel.data.pojos;
 
 import com.google.gson.annotations.SerializedName;
 
-// Generated with https://www.jsonschema2pojo.org/
 public class LastFMTrack {
   @SerializedName("AlbumName")
   private String albumName;
