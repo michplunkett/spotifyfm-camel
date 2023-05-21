@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import spotifyfmcamel.message.SpotifyFMMessage;
+import spotifyfmcamel.message.SpotifyFMMessageIterator;
 
 public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
   final String unitPrintString = "Workdays in ";
@@ -39,7 +40,9 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
   public ArrayList<SpotifyFMMessage> getRelevantMessages(
       ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
-    for (SpotifyFMMessage m : messages) {
+    SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
+    while (iterator.hasNext()) {
+      SpotifyFMMessage m = iterator.next();
       LocalDateTime listenDateTime = m.getListenDateTime();
       if (listenDateTime.getYear() == year
           && weekdays.contains(listenDateTime.getDayOfWeek())
