@@ -5,15 +5,23 @@ import java.util.ArrayList;
 import spotifyfmcamel.message.SpotifyFMMessage;
 
 public class YearMoodCalculator extends MoodCalculatorStrategy {
-  final String durationString = "the year of ";
+  final String unitPrintString = "the year of ";
 
-  void calculate(ArrayList<SpotifyFMMessage> messages, String year) {
+  void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    double[] metrics = calculateMood(relevantMessages);
-    printCalculation(durationString + year, metrics[0], metrics[1]);
+    float[] metrics = calculateMood(relevantMessages);
+    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
   }
 
-  public ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, String year) {
+  public ArrayList<SpotifyFMMessage> getRelevantMessages(
+      ArrayList<SpotifyFMMessage> messages, int year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
+    for (SpotifyFMMessage m : messages) {
+      if (m.getListenDateTime().getYear() == year) {
+        relevantMessages.add(m);
+      }
+    }
 
+    return relevantMessages;
   }
 }

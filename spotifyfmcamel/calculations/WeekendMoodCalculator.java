@@ -4,20 +4,33 @@
  */
 package spotifyfmcamel.calculations;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import spotifyfmcamel.message.SpotifyFMMessage;
 
 public class WeekendMoodCalculator extends MoodCalculatorStrategy {
-  final String durationString = "Weekends in ";
+  final String unitPrintString = "Weekends in ";
+  final ArrayList<DayOfWeek> weekendDays =
+      new ArrayList<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
 
-  void calculate(ArrayList<SpotifyFMMessage> messages, String year) {
+  void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    double[] metrics = calculateMood(relevantMessages);
-    printCalculation(durationString + year, metrics[0], metrics[1]);
+    float[] metrics = calculateMood(relevantMessages);
+    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
   }
 
   public ArrayList<SpotifyFMMessage> getRelevantMessages(
-      ArrayList<SpotifyFMMessage> messages, String year) {
-    
+      ArrayList<SpotifyFMMessage> messages, int year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
+    for (SpotifyFMMessage m : messages) {
+      LocalDateTime listenDateTime = m.getListenDateTime();
+      if (listenDateTime.getYear() == year && weekendDays.contains(listenDateTime.getDayOfWeek())) {
+        relevantMessages.add(m);
+      }
+    }
+
+    return relevantMessages;
   }
 }
