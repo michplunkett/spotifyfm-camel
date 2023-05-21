@@ -2,7 +2,9 @@
 package spotifyfmcamel.data.pojos;
 
 import com.google.gson.annotations.SerializedName;
+import javax.annotation.Generated;
 
+@Generated("jsonschema2pojo")
 public class SpotifyAudioFeatures {
   @SerializedName("acousticness")
   private float acousticness;
