@@ -9,10 +9,10 @@ import spotifyfmcamel.message.SpotifyFMMessage;
 
 public abstract class MoodCalculatorStrategy {
 
-  abstract void calculate(ArrayList<SpotifyFMMessage> messages, String year);
+  abstract void calculate(ArrayList<SpotifyFMMessage> messages, int year);
 
   abstract ArrayList<SpotifyFMMessage> getRelevantMessages(
-      ArrayList<SpotifyFMMessage> messages, String year);
+      ArrayList<SpotifyFMMessage> messages, int year);
 
   public float[] calculateMood(ArrayList<SpotifyFMMessage> messages) {
     float sum = 0.0F;
