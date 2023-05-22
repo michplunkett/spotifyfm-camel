@@ -5,19 +5,23 @@
 package spotifyfmcamel.calculations;
 
 import java.util.ArrayList;
-import spotifyfmcamel.message.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public abstract class MoodCalculatorStrategy {
 
-  abstract void calculate(ArrayList<SpotifyFMMessage> messages, int year);
+  public abstract void calculate(ArrayList<SpotifyFMMessage> messages, int year);
 
   abstract ArrayList<SpotifyFMMessage> getRelevantMessages(
       ArrayList<SpotifyFMMessage> messages, int year);
 
-  public float[] calculateMood(ArrayList<SpotifyFMMessage> messages) {
+  float[] calculateMood(ArrayList<SpotifyFMMessage> messages) {
     float sum = 0.0F;
     float meanDiffs = 0.0F;
     int length = messages.size();
+
+    if (length == 0) {
+      return new float[] {0.0F, 0.0F};
+    }
 
     for (SpotifyFMMessage m : messages) {
       sum += m.getValence();
@@ -33,7 +37,7 @@ public abstract class MoodCalculatorStrategy {
     return new float[] {mean, standardDeviation};
   }
 
-  public void printCalculation(String durationString, float mean, float standardDeviation) {
+  void printCalculation(String durationString, float mean, float standardDeviation) {
     System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
     System.out.printf(
         "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);

@@ -2,11 +2,13 @@
  * This Abstract Class serves as the baseline structure for all messages that will be handled within
  * this message delivery system.
  */
-package spotifyfmcamel.message;
+package spotifyfmcamel.messages;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 public abstract class Message {
+  @JsonProperty("history")
   ArrayList<String> history = new ArrayList<>();
 
   public void addToHistory(String className) {

@@ -1,5 +1,5 @@
 /** This abstract class serves as the basis for the SpotifyFMMessage iterator. */
-package spotifyfmcamel.message;
+package spotifyfmcamel.messages;
 
 public abstract class Iterator {
   abstract boolean hasNext();

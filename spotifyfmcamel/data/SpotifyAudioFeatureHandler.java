@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import spotifyfmcamel.data.pojos.SpotifyAudioFeatures;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifyAudioFeatureHandler extends DataHandler {
   private static SpotifyAudioFeatureHandler instance = null;
@@ -32,17 +33,26 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
     return instance;
   }
 
+  public boolean getValence(SpotifyFMMessage m) {
+    String spotifyID = m.getSpotifyID();
+    m.addToHistory(this.getClass().getName());
+    if (audioFeaturesMap.containsKey(spotifyID)) {
+      m.setValence(audioFeaturesMap.get(spotifyID).getValence());
+      return true;
+    }
+    return false;
+  }
+
   @Override
   void readInData() {
     try {
-      File file = new File("./data/input/spotifyIDToAudioFeature.json");
+      File file = new File("./data/stores/spotifyIDToAudioFeature.json");
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
 
       Type gsonMap = new TypeToken<HashMap<String, SpotifyAudioFeatures>>() {}.getType();
       audioFeaturesMap = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      System.out.println(e.getStackTrace());
       throw new RuntimeException(e);
     } catch (IOException e) {
       throw new RuntimeException(e);

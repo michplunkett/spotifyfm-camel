@@ -1,27 +1,16 @@
-/**
- * This class is the Singleton that will handle all the information in the lastFMTrackListing.json
- * file.
- */
+/** This class is the Singleton that will hold all processed SpotifyFMMessages. */
 package spotifyfmcamel.data;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.mchange.io.FileUtils;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import spotifyfmcamel.data.pojos.LastFMTrack;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
-public class LastFMTrackListingHandler extends DataHandler {
+public class LastFMTrackListingHandler {
   private static LastFMTrackListingHandler instance = null;
 
-  private ArrayList<LastFMTrack> trackList;
+  private ArrayList<SpotifyFMMessage> trackList;
 
   private LastFMTrackListingHandler() {
     trackList = new ArrayList<>();
-    readInData();
   }
 
   public static synchronized LastFMTrackListingHandler getInstance() {
@@ -32,23 +21,12 @@ public class LastFMTrackListingHandler extends DataHandler {
     return instance;
   }
 
-  @Override
-  void readInData() {
-    try {
-      // Instantiate FileReader for lastFMTrackListing.json
-      File file = new File("./data/input/lastFMTrackListing.json");
+  public void addFullyQualifiedTrack(SpotifyFMMessage m) {
+    m.addToHistory(this.getClass().getName());
+    trackList.add(m);
+  }
 
-      String jsonString = FileUtils.getContentsAsString(file);
-      // Instantiate Gson
-      Gson gson = new Gson();
-
-      Type gsonList = new TypeToken<ArrayList<LastFMTrack>>() {}.getType();
-      trackList = gson.fromJson(jsonString, gsonList);
-    } catch (FileNotFoundException e) {
-      System.out.println(e.getStackTrace());
-      throw new RuntimeException(e);
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
+  public ArrayList<SpotifyFMMessage> getTrackList() {
+    return trackList;
   }
 }

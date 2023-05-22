@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifySearchStringHandler extends DataHandler {
   private static SpotifySearchStringHandler instance = null;
@@ -31,18 +32,27 @@ public class SpotifySearchStringHandler extends DataHandler {
     return instance;
   }
 
+  public boolean getSongID(SpotifyFMMessage m) {
+    String key = m.getArtist() + " " + m.getAlbumName() + " " + m.getName();
+    m.addToHistory(this.getClass().getName());
+    if (searchStringToID.containsKey(key)) {
+      m.setSpotifyID(searchStringToID.get(key));
+      return true;
+    }
+    return false;
+  }
+
   @Override
   void readInData() {
     try {
       // Instantiate FileReader for spotifySearchStringToSongID.json
-      File file = new File("./data/input/spotifySearchStringToSongID.json");
+      File file = new File("./data/stores/spotifySearchStringToSongID.json");
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
 
       Type gsonMap = new TypeToken<HashMap<String, String>>() {}.getType();
       searchStringToID = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      System.out.println(e.getStackTrace());
       throw new RuntimeException(e);
     } catch (IOException e) {
       throw new RuntimeException(e);
