@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifySearchStringHandler extends DataHandler {
   private static SpotifySearchStringHandler instance = null;
@@ -29,6 +30,14 @@ public class SpotifySearchStringHandler extends DataHandler {
     }
 
     return instance;
+  }
+
+  public void getSongID(SpotifyFMMessage m) {
+    String key = m.getArtist() + " " + m.getAlbumName() + " " + m.getName();
+    if (searchStringToID.containsKey(key)) {
+      m.setSpotifyID(searchStringToID.get(key));
+    }
+    m.addToHistory(this.getClass().getName());
   }
 
   @Override
