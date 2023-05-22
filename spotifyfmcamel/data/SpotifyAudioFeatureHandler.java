@@ -35,7 +35,7 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
   @Override
   void readInData() {
     try {
-      File file = new File("./data/input/spotifyIDToAudioFeature.json");
+      File file = new File("./data/stores/spotifyIDToAudioFeature.json");
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
 
