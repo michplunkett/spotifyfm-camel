@@ -33,8 +33,11 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
     return instance;
   }
 
+  // Function that adds the valence score to a message if its ID is contained in the
+  // audioFeaturesMap map and returns true if a valence score was added.
   public boolean getValence(SpotifyFMMessage m) {
     String spotifyID = m.getSpotifyID();
+    // Add class name to Message History.
     m.addToHistory(this.getClass().getName());
     if (audioFeaturesMap.containsKey(spotifyID)) {
       m.setValence(audioFeaturesMap.get(spotifyID).getValence());

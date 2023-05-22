@@ -32,8 +32,11 @@ public class SpotifySearchStringHandler extends DataHandler {
     return instance;
   }
 
+  // Function that adds the SpotifyID to a message if its search string is contained in the
+  // searchStringToID map and returns true if a SpotifyID was added.
   public boolean getSongID(SpotifyFMMessage m) {
     String key = m.getArtist() + " " + m.getAlbumName() + " " + m.getName();
+    // Add class name to Message History.
     m.addToHistory(this.getClass().getName());
     if (searchStringToID.containsKey(key)) {
       m.setSpotifyID(searchStringToID.get(key));
