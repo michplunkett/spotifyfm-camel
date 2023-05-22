@@ -30,11 +30,13 @@ public abstract class MoodCalculatorStrategy {
       sum += m.getValence();
     }
 
+    // Calculate average valence.
     float mean = (sum / length);
 
     for (SpotifyFMMessage m : messages) {
       meanDiffs += Math.pow(m.getValence() - mean, 2);
     }
+    // Calculate the standard deviation for the valence.
     float standardDeviation = (float) Math.sqrt(meanDiffs / length);
 
     return new float[] {mean, standardDeviation};
