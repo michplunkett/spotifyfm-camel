@@ -1,8 +1,14 @@
 package spotifyfmcamel.facades;
 
+import java.util.ArrayList;
+import spotifyfmcamel.calculations.WeekendMoodCalculator;
+import spotifyfmcamel.calculations.WorkDayMoodCalculator;
+import spotifyfmcamel.calculations.YearMoodCalculator;
 import spotifyfmcamel.data.LastFMTrackListingHandler;
 import spotifyfmcamel.data.SpotifyAudioFeatureHandler;
 import spotifyfmcamel.data.SpotifySearchStringHandler;
+import spotifyfmcamel.messages.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class SpotifyFMRunner extends Runner {
   SpotifyFMRouteContainer routeContainer;
@@ -16,8 +22,25 @@ public class SpotifyFMRunner extends Runner {
   }
 
   void calculateYearlyMoods() {
-    System.out.println(
-        "This many tracks have been stored: " + trackListingHandler.getTrackList().size());
+    ArrayList<SpotifyFMMessage> messages = trackListingHandler.getTrackList();
+    ArrayList<Integer> years = new ArrayList<>();
+    SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
+    while (iterator.hasNext()) {
+      Integer year = iterator.next().getListenDateTime().getYear();
+      if (!years.contains(year)) {
+        years.add(year);
+      }
+    }
+
+    WeekendMoodCalculator weekend = new WeekendMoodCalculator();
+    WorkDayMoodCalculator workday = new WorkDayMoodCalculator();
+    YearMoodCalculator yearly = new YearMoodCalculator();
+
+    for (Integer year : years) {
+      weekend.calculate(messages, year);
+      workday.calculate(messages, year);
+      yearly.calculate(messages, year);
+    }
   }
 
   void createDataStores() {

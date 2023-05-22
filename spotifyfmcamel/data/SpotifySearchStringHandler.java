@@ -53,7 +53,6 @@ public class SpotifySearchStringHandler extends DataHandler {
       Type gsonMap = new TypeToken<HashMap<String, String>>() {}.getType();
       searchStringToID = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      System.out.println(e.getStackTrace());
       throw new RuntimeException(e);
     } catch (IOException e) {
       throw new RuntimeException(e);

@@ -31,14 +31,13 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
     return workStart.isAfter(testListenTime) && workEnd.isBefore(testListenTime);
   }
 
-  void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
+  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
     float[] metrics = calculateMood(relevantMessages);
     printCalculation(unitPrintString + year, metrics[0], metrics[1]);
   }
 
-  public ArrayList<SpotifyFMMessage> getRelevantMessages(
-      ArrayList<SpotifyFMMessage> messages, int year) {
+  ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
     SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
     while (iterator.hasNext()) {
