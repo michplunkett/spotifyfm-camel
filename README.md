@@ -10,7 +10,7 @@ With this project, I am creating a messaging service that takes advantage of thr
 produced using the combination of Last.fm and Spotify data. Based on previous work, I curated a 
 list of all the tracks I have listened to, when I listened to them, their respective duration, and 
 a handful of features that Spotify calculates for every song in their system. This system will take 
-a list of songs I have listened to since 2015 (with 1 out of every 4 of the 140k tracks being used), 
+a list of songs I have listened to since 2015 (with 1 out of every 8 of the 140k tracks being used), 
 fetch their respective Spotify song IDs, fetch their audio features, and then calculate some metrics 
 based on those features.
 
