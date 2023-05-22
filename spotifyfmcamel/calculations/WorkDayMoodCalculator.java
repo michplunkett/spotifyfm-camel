@@ -28,7 +28,7 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
   public static boolean isBetween(LocalTime testListenTime) {
     final LocalTime workStart = LocalTime.parse("09:00:00");
     final LocalTime workEnd = LocalTime.parse("17:00:00");
-    return workStart.isAfter(testListenTime) && workEnd.isBefore(testListenTime);
+    return testListenTime.isAfter(workStart) && testListenTime.isBefore(workEnd);
   }
 
   public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
