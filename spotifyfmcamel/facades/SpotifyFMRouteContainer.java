@@ -3,6 +3,8 @@ package spotifyfmcamel.facades;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -36,7 +38,15 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                 .log("RETRIEVED:  ${file:onlyname}")
                 .unmarshal()
                 .json(JsonLibrary.Jackson)
-                .to("jms:queue:SPOTIFYFM_TEST");
+                .to("jms:queue:SPOTIFYFM_UNFILTEREDSONGS");
+            from("jms:queue:SPOTIFYFM_UNFILTEREDSONGS")
+                .log("RETRIEVED: ${body} in SPOTIFYFM_UNFILTEREDSONGS queue")
+                .process(new Processor() {
+                  public void process(Exchange e) {
+                    System.out.println("!!!!!!");
+                    System.out.println(e.getIn().getBody());
+                  }
+                });
             try {
               Thread.sleep(5000);
             } catch (InterruptedException e) {

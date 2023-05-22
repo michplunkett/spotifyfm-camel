@@ -2,7 +2,7 @@
 package spotifyfmcamel.facades;
 
 public abstract class Runner {
-  abstract void getDataStores();
+  abstract void createDataStores();
 
   abstract void setupRoutes() throws Exception;
 

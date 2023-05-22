@@ -1,18 +1,21 @@
 package spotifyfmcamel.facades;
 
+import spotifyfmcamel.data.SpotifyAudioFeatureHandler;
+import spotifyfmcamel.data.SpotifySearchStringHandler;
+
 public class SpotifyFMRunner extends Runner {
-  SpotifyFMDataContainer dataContainer;
   SpotifyFMRouteContainer routeContainer;
 
   public SpotifyFMRunner() throws Exception {
-    getDataStores();
+    createDataStores();
     setupRoutes();
   }
 
   void calculateYearlyMoods() {}
 
-  void getDataStores() {
-    dataContainer = new SpotifyFMDataContainer();
+  void createDataStores() {
+    SpotifyAudioFeatureHandler.getInstance();
+    SpotifySearchStringHandler.getInstance();
   }
 
   void setupRoutes() throws Exception {
