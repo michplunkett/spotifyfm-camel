@@ -9,6 +9,7 @@ public class SpotifyFMRunner extends Runner {
   public SpotifyFMRunner() throws Exception {
     createDataStores();
     setupRoutes();
+    runMessengerSystem();
   }
 
   void calculateYearlyMoods() {}
@@ -22,5 +23,7 @@ public class SpotifyFMRunner extends Runner {
     routeContainer = new SpotifyFMRouteContainer();
   }
 
-  void runMessengerSystem() {}
+  void runMessengerSystem() throws Exception {
+    routeContainer.runRoutes();
+  }
 }
