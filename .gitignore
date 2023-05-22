@@ -1,6 +1,7 @@
 data/input
 data/output
 data/stores
+!data/stores/*.sh
 
 out/
 target/
