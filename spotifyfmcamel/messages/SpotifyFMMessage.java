@@ -4,91 +4,124 @@
  */
 package spotifyfmcamel.messages;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SpotifyFMMessage extends Message {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+  "albumName",
+  "artist",
+  "artistUUID",
+  "duration",
+  "listenDate",
+  "lowerCaseArtist",
+  "name",
+  "playCount",
+  "rank",
+  "spotifyID",
+  "acousticness",
+  "analysis_url",
+  "danceability",
+  "duration_ms",
+  "energy",
+  "id",
+  "instrumentalness",
+  "key",
+  "liveness",
+  "loudness",
+  "mode",
+  "speechiness",
+  "tempo",
+  "time_signature",
+  "track_href",
+  "uri",
+  "valence"
+})
+public class SpotifyFMMessage extends Message implements Serializable {
   DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
-  @SerializedName("albumName")
+  @JsonProperty("albumName")
   private String albumName;
 
-  @SerializedName("artist")
+  @JsonProperty("artist")
   private String artist;
 
-  @SerializedName("artistUUID")
+  @JsonProperty("artistUUID")
   private String artistUUID;
 
-  @SerializedName("duration")
+  @JsonProperty("duration")
   private int duration;
 
-  @SerializedName("listenDate")
+  @JsonProperty("listenDate")
   private String listenDate;
 
   private LocalDateTime listenDateTime;
 
-  @SerializedName("lowerCaseArtist")
+  @JsonProperty("lowerCaseArtist")
   private String lowerCaseArtist;
 
-  @SerializedName("name")
+  @JsonProperty("name")
   private String name;
 
-  @SerializedName("playCount")
+  @JsonProperty("playCount")
   private int playCount;
 
-  @SerializedName("rank")
+  @JsonProperty("rank")
   private int rank;
 
-  @SerializedName("spotifyID")
+  @JsonProperty("spotifyID")
   private String spotifyID;
 
-  @SerializedName("acousticness")
+  @JsonProperty("acousticness")
   private float acousticness;
 
-  @SerializedName("analysis_url")
+  @JsonProperty("analysisUrl")
   private String analysisUrl;
 
-  @SerializedName("danceability")
+  @JsonProperty("danceability")
   private float danceability;
 
-  @SerializedName("duration_ms")
+  @JsonProperty("durationMs")
   private int durationMs;
 
-  @SerializedName("energy")
+  @JsonProperty("energy")
   private float energy;
 
-  @SerializedName("instrumentalness")
+  @JsonProperty("instrumentalness")
   private float instrumentalness;
 
-  @SerializedName("key")
+  @JsonProperty("key")
   private int key;
 
-  @SerializedName("liveness")
+  @JsonProperty("liveness")
   private float liveness;
 
-  @SerializedName("loudness")
+  @JsonProperty("loudness")
   private float loudness;
 
-  @SerializedName("mode")
+  @JsonProperty("mode")
   private int mode;
 
-  @SerializedName("speechiness")
+  @JsonProperty("speechiness")
   private float speechiness;
 
-  @SerializedName("tempo")
+  @JsonProperty("tempo")
   private float tempo;
 
-  @SerializedName("time_signature")
+  @JsonProperty("timeSignature")
   private int timeSignature;
 
-  @SerializedName("track_href")
+  @JsonProperty("trackHref")
   private String trackHref;
 
-  @SerializedName("uri")
+  @JsonProperty("uri")
   private String uri;
 
-  @SerializedName("valence")
+  @JsonProperty("albumName")
   private float valence;
 
   public String getAlbumName() {
