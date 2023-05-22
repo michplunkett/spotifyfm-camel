@@ -5,7 +5,7 @@
 package spotifyfmcamel.calculations;
 
 import java.util.ArrayList;
-import spotifyfmcamel.message.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public abstract class MoodCalculatorStrategy {
 

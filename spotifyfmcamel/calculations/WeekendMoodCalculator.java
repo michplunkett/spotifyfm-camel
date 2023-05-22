@@ -8,8 +8,8 @@ import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import spotifyfmcamel.message.SpotifyFMMessage;
-import spotifyfmcamel.message.SpotifyFMMessageIterator;
+import spotifyfmcamel.messages.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class WeekendMoodCalculator extends MoodCalculatorStrategy {
   final String unitPrintString = "Weekends in ";

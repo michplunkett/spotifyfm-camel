@@ -3,8 +3,8 @@ package spotifyfmcamel.calculations;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import spotifyfmcamel.message.SpotifyFMMessage;
-import spotifyfmcamel.message.SpotifyFMMessageIterator;
+import spotifyfmcamel.messages.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class YearMoodCalculator extends MoodCalculatorStrategy {
   final String unitPrintString = "the year of ";

@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import spotifyfmcamel.message.SpotifyFMMessage;
-import spotifyfmcamel.message.SpotifyFMMessageIterator;
+import spotifyfmcamel.messages.SpotifyFMMessage;
+import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
   final String unitPrintString = "Workdays in ";
