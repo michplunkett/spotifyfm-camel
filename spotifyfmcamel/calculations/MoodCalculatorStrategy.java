@@ -10,7 +10,7 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 public abstract class MoodCalculatorStrategy {
 
   // Function signature for the mood calculation.
-  public float[] calculate(ArrayList<SpotifyFMMessage> messages, int year) {
+  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
     float[] metrics = calculateMood(relevantMessages);
     printCalculation(metrics[0], metrics[1], year);
