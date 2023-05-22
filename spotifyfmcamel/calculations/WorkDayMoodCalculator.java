@@ -30,13 +30,6 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
     return testListenTime.isAfter(workStart) && testListenTime.isBefore(workEnd);
   }
 
-  // Function that handles mood calculation operations.
-  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
-    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    float[] metrics = calculateMood(relevantMessages);
-    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
-  }
-
   // Function that filters for messages with listenDates that were during the standard workday in a
   // given year.
   ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, int year) {
@@ -53,5 +46,12 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
     }
 
     return relevantMessages;
+  }
+
+  void printCalculation(float mean, float standardDeviation, int year) {
+    String durationString = unitPrintString + year;
+    System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
+    System.out.printf(
+        "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
   }
 }

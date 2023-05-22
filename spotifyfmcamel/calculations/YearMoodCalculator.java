@@ -9,13 +9,6 @@ import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 public class YearMoodCalculator extends MoodCalculatorStrategy {
   static final String unitPrintString = "the year of ";
 
-  // Function that handles mood calculation operations.
-  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
-    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    float[] metrics = calculateMood(relevantMessages);
-    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
-  }
-
   // Function that gets all messages during a given year.
   ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
@@ -29,5 +22,12 @@ public class YearMoodCalculator extends MoodCalculatorStrategy {
     }
 
     return relevantMessages;
+  }
+
+  void printCalculation(float mean, float standardDeviation, int year) {
+    String durationString = unitPrintString + year;
+    System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
+    System.out.printf(
+        "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
   }
 }

@@ -1,6 +1,6 @@
 /**
- * This Interface class serves as baseline structure for the Strategies that will be implemented in
- * the other _Calculator classes.
+ * This Interface class serves as baseline structure for the Strategies as well as a Template that
+ * will be implemented in the other _Calculator classes.
  */
 package spotifyfmcamel.calculations;
 
@@ -10,7 +10,11 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 public abstract class MoodCalculatorStrategy {
 
   // Function signature for the mood calculation.
-  public abstract void calculate(ArrayList<SpotifyFMMessage> messages, int year);
+  public float[] calculate(ArrayList<SpotifyFMMessage> messages, int year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
+    float[] metrics = calculateMood(relevantMessages);
+    printCalculation(metrics[0], metrics[1], year);
+  }
 
   // Function signature for getting the relevant messages for a given timeframe.
   abstract ArrayList<SpotifyFMMessage> getRelevantMessages(
@@ -43,9 +47,5 @@ public abstract class MoodCalculatorStrategy {
   }
 
   // Print function for all Strategies.
-  void printCalculation(String durationString, float mean, float standardDeviation) {
-    System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
-    System.out.printf(
-        "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
-  }
+  abstract void printCalculation(float mean, float standardDeviation, int year);
 }
