@@ -4,6 +4,7 @@ package spotifyfmcamel.data.pojos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.io.Serializable;
 import javax.annotation.Generated;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,7 +21,7 @@ import javax.annotation.Generated;
   "SpotifyID"
 })
 @Generated("jsonschema2pojo")
-public class LastFMTrack {
+public class LastFMTrack implements Serializable {
 
   @JsonProperty("AlbumName")
   private String albumName;
