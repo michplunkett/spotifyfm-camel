@@ -21,11 +21,7 @@ public class SpotifyFMRouteContainer extends RouteContainer {
 
   ConnectionFactory connectionFactory;
 
-  public SpotifyFMRouteContainer() throws Exception {
-    setUpConnection();
-  }
-
-  void setUpConnection() throws Exception {
+  public void setUpConnection() throws Exception {
     // create CamelContext
     context = new DefaultCamelContext();
 
