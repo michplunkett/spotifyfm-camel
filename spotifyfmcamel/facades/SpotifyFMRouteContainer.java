@@ -1,5 +1,7 @@
 package spotifyfmcamel.facades;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
@@ -9,10 +11,17 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.dataformat.JsonLibrary;
+import spotifyfmcamel.data.LastFMTrackListingHandler;
+import spotifyfmcamel.data.SpotifyAudioFeatureHandler;
+import spotifyfmcamel.data.SpotifySearchStringHandler;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifyFMRouteContainer extends RouteContainer {
   // create CamelContext
   static final String brokerURL = "tcp://localhost:61616";
+  static final String songQueue = "jms:queue:SPOTIFYFM_SONGSWITHINFO";
+  static final String deadLetterQueue = "jms:queue:SPOTIFYFM_DEADLETTER";
+  static final ObjectMapper mapper = new ObjectMapper();
   CamelContext context;
 
   // connect to ActiveMQ JMS broker listening on localhost on port 61616
@@ -35,18 +44,63 @@ public class SpotifyFMRouteContainer extends RouteContainer {
           public void configure() {
             // Read all files from the data/input folder
             from("file:data/input?noop=true")
-                .log("RETRIEVED:  ${file:onlyname}")
+                .errorHandler(
+                    deadLetterChannel("jms:queue:SPOTIFYFM_DEADLETTER")
+                        .log("This message is being sent to the DeadLetter topic: ${body}"))
                 .unmarshal()
                 .json(JsonLibrary.Jackson)
-                .to("jms:queue:SPOTIFYFM_UNFILTEREDSONGS");
-            from("jms:queue:SPOTIFYFM_UNFILTEREDSONGS")
-                .log("RETRIEVED: ${body} in SPOTIFYFM_UNFILTEREDSONGS queue")
-                .process(new Processor() {
-                  public void process(Exchange e) {
-                    System.out.println("!!!!!!");
-                    System.out.println(e.getIn().getBody());
-                  }
-                });
+                .process(
+                    new Processor() {
+                      public void process(Exchange e) throws Exception {
+                        SpotifySearchStringHandler searchStringHandler =
+                            SpotifySearchStringHandler.getInstance();
+
+                        String stringBody = mapper.writeValueAsString(e.getIn().getBody());
+                        SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
+                        searchStringHandler.getSongID(m);
+                        e.getIn().setBody(mapper.writeValueAsString(m));
+                        if (m.getSpotifyID() == "") {
+                          throw new Exception();
+                        }
+                      }
+                    })
+                .process(
+                    new Processor() {
+                      public void process(Exchange e) throws Exception {
+                        SpotifyAudioFeatureHandler audioFeatureHandler =
+                            SpotifyAudioFeatureHandler.getInstance();
+
+                        SpotifyFMMessage m =
+                            mapper.readValue(
+                                e.getIn().getBody().toString(), SpotifyFMMessage.class);
+                        e.getIn().setBody(mapper.writeValueAsString(m));
+                        if (!audioFeatureHandler.getValence(m)) {
+                          throw new Exception();
+                        }
+                      }
+                    })
+                .to(songQueue);
+            from(songQueue)
+                .unmarshal()
+                .json(JsonLibrary.Jackson)
+                .choice()
+                .when(body().contains("\"spotifyID\":\"\""))
+                .to(deadLetterQueue)
+                .when(body().contains("\"valence\":0.0"))
+                .to(deadLetterQueue)
+                .otherwise()
+                .process(
+                    new Processor() {
+                      public void process(Exchange e) throws IOException {
+                        LastFMTrackListingHandler trackListingHandler =
+                            LastFMTrackListingHandler.getInstance();
+
+                        String stringBody = mapper.writeValueAsString(e.getIn().getBody());
+                        SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
+                        trackListingHandler.addFullyQualifiedTrack(m);
+                      }
+                    })
+                .endChoice();
             try {
               Thread.sleep(5000);
             } catch (InterruptedException e) {

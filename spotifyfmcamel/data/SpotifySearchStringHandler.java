@@ -32,12 +32,14 @@ public class SpotifySearchStringHandler extends DataHandler {
     return instance;
   }
 
-  public void getSongID(SpotifyFMMessage m) {
+  public boolean getSongID(SpotifyFMMessage m) {
     String key = m.getArtist() + " " + m.getAlbumName() + " " + m.getName();
+    m.addToHistory(this.getClass().getName());
     if (searchStringToID.containsKey(key)) {
       m.setSpotifyID(searchStringToID.get(key));
+      return true;
     }
-    m.addToHistory(this.getClass().getName());
+    return false;
   }
 
   @Override

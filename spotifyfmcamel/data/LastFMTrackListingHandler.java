@@ -25,4 +25,8 @@ public class LastFMTrackListingHandler {
     m.addToHistory(this.getClass().getName());
     trackList.add(m);
   }
+
+  public ArrayList<SpotifyFMMessage> getTrackList() {
+    return trackList;
+  }
 }

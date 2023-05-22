@@ -33,12 +33,14 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
     return instance;
   }
 
-  public void getValence(SpotifyFMMessage m) {
+  public boolean getValence(SpotifyFMMessage m) {
     String spotifyID = m.getSpotifyID();
+    m.addToHistory(this.getClass().getName());
     if (audioFeaturesMap.containsKey(spotifyID)) {
       m.setValence(audioFeaturesMap.get(spotifyID).getValence());
+      return true;
     }
-    m.addToHistory(this.getClass().getName());
+    return false;
   }
 
   @Override

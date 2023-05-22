@@ -6,7 +6,7 @@ public abstract class Runner {
 
   abstract void setupRoutes() throws Exception;
 
-  abstract void runMessengerSystem();
+  abstract void runMessengerSystem() throws Exception;
 
   abstract void calculateYearlyMoods();
 }
