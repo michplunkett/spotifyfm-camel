@@ -45,7 +45,6 @@ public class SpotifySearchStringHandler extends DataHandler {
   @Override
   void readInData() {
     try {
-      // Instantiate FileReader for spotifySearchStringToSongID.json
       File file = new File("./data/stores/spotifySearchStringToSongID.json");
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
