@@ -16,7 +16,7 @@ del=1
 for fspec in *.* ; do
     if [[ ${del} -eq 1 ]] ; then
         del=0
-        echo rm ${fspec}
+        rm ${fspec}
     else
         echo ok ${fspec}
         del=1
