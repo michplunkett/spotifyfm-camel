@@ -1,3 +1,4 @@
+/** This class is the implementation of the Facade EIP for the mood calculations. */
 package spotifyfmcamel.facades;
 
 import java.util.ArrayList;
