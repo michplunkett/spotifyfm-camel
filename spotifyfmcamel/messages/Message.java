@@ -4,9 +4,12 @@
  */
 package spotifyfmcamel.messages;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Message {
+public abstract class Message implements Serializable {
+  @JsonProperty("history")
   ArrayList<String> history = new ArrayList<>();
 
   public void addToHistory(String className) {
