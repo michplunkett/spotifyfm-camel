@@ -14,6 +14,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 import spotifyfmcamel.data.pojos.SpotifyAudioFeatures;
+import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifyAudioFeatureHandler extends DataHandler {
   private static SpotifyAudioFeatureHandler instance = null;
@@ -30,6 +31,14 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
     }
 
     return instance;
+  }
+
+  public void getValence(SpotifyFMMessage m) {
+    String spotifyID = m.getSpotifyID();
+    if (audioFeaturesMap.containsKey(spotifyID)) {
+      m.setValence(audioFeaturesMap.get(spotifyID).getValence());
+    }
+    m.addToHistory(this.getClass().getName());
   }
 
   @Override
