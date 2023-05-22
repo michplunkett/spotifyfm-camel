@@ -19,6 +19,6 @@ based on those features.
 - Instead of storing the valence statistics to a JSON file, I am printing them to `std.out`.
 
 ## Instructions to Run the Application
-1. To run this, I use Apache Maven ` 3.9.2` and sync with the sources in the`pom.xml` file.
+1. To run this, I use Apache Maven `3.9.2` and sync with the sources in the`pom.xml` file.
 2. Start ActiveMQ, I'm using version `5.18.1`, using the command `activemq console`.
 3. Run the application by running the `main` function in the `Main.java` file.
