@@ -33,8 +33,9 @@ public class SpotifyFMRouteContainer extends RouteContainer {
 
     context.addRoutes(
         new RouteBuilder() {
-          public void configure() {
-            // Read all files from the data/input folder
+          public void configure() throws Exception {
+            // Read all files from the data/input folder.
+            // This is the first part of the Point-to-Point Channel EIP concept.
             from("file:data/input?noop=true")
                 // Create the error handler and send any errored messages to the DeadLetter queue.
                 .errorHandler(
@@ -52,6 +53,7 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                 .to(songQueue);
             // Create a Selective Consumer that only takes in messages with non-empty SpotifyIDs and
             // greater than 0.0 valence scores.
+            // This is the second part of the Point-to-Point Channel EIP concept.
             from(songQueue)
                 .unmarshal()
                 .json(JsonLibrary.Jackson)
@@ -67,20 +69,22 @@ public class SpotifyFMRouteContainer extends RouteContainer {
             try {
               Thread.sleep(5000);
             } catch (InterruptedException e) {
-              e.printStackTrace();
+              throw new Exception("The ActiveMQ queue was interrupted.");
             }
           }
         });
   }
 
   public void runRoutes() throws Exception {
-    // start the route and let it do its work
+    // Start the route and let it do its thing.
     context.start();
     // I increased the sleep time on recommendation from Alan since I all of my messages
-    // weren't going through when the value was 2000.
-    Thread.sleep(10000);
+    // weren't going through when the value was 60000. There are somewhere around 100k+
+    // messages that will be going through the system, so the sleep will be longer than
+    // the standard time.
+    Thread.sleep(60000);
 
-    // stop the CamelContext
+    // Stop the CamelContext.
     context.stop();
   }
 }
