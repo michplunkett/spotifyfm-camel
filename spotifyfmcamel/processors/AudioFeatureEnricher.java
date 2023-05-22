@@ -1,3 +1,7 @@
+/**
+ * This class is an implementation of the Content Enricher EIP concept that adds a valence score to
+ * a message.
+ */
 package spotifyfmcamel.processors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +20,8 @@ public class AudioFeatureEnricher implements Processor {
 
     boolean hasValence = audioFeatureHandler.getValence(m);
     e.getIn().setBody(mapper.writeValueAsString(m));
+    // If there isn't a valence score, throw an error and send the message to the DeadLetter
+    // Channel.
     if (!hasValence) {
       throw new Exception();
     }

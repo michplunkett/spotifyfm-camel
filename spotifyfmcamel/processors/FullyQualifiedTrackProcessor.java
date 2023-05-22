@@ -1,3 +1,6 @@
+/**
+ * This class adds a fully-qualified track to the list in the LastFMTrackListingHandler Singleton.
+ */
 package spotifyfmcamel.processors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +16,8 @@ public class FullyQualifiedTrackProcessor implements Processor {
   public void process(Exchange e) throws IOException {
     LastFMTrackListingHandler trackListingHandler = LastFMTrackListingHandler.getInstance();
 
+    // I used the mapper first to write the value as a string because the JSON values were not
+    // coming with quotation marks around their keys without it.
     String stringBody = mapper.writeValueAsString(e.getIn().getBody());
     SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
     trackListingHandler.addFullyQualifiedTrack(m);
