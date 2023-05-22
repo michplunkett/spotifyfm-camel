@@ -81,7 +81,7 @@ public class SpotifyFMRouteContainer extends RouteContainer {
 
     // There are somewhere around 17k+ messages that will be going through the
     // system, so the sleep will be longer than the standard time.
-    Thread.sleep(100000);
+    Thread.sleep(130000);
 
     // Stop the CamelContext.
     context.stop();
