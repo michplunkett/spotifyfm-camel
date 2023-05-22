@@ -2,6 +2,7 @@
 package spotifyfmcamel.containers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import spotifyfmcamel.calculations.WeekendMoodCalculator;
 import spotifyfmcamel.calculations.WorkDayMoodCalculator;
 import spotifyfmcamel.calculations.YearMoodCalculator;
@@ -29,6 +30,7 @@ public class SpotifyFMCalculationContainer extends CalculationContainer {
       }
     }
 
+    Collections.sort(years);
     return years;
   }
 
