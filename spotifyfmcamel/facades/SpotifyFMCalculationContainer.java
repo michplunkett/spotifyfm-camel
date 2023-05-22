@@ -8,7 +8,7 @@ import spotifyfmcamel.data.LastFMTrackListingHandler;
 import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
-public class SpotifyFMCalculator extends Calculator {
+public class SpotifyFMCalculationContainer extends CalculationContainer {
 
   private final LastFMTrackListingHandler trackListingHandler =
       LastFMTrackListingHandler.getInstance();

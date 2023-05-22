@@ -9,7 +9,7 @@ import spotifyfmcamel.data.SpotifySearchStringHandler;
 
 public class SpotifyFMRunner extends Runner {
   SpotifyFMRouteContainer routeContainer;
-  SpotifyFMCalculator calculator;
+  SpotifyFMCalculationContainer calculator;
 
   public SpotifyFMRunner() throws Exception {
     createDataStores();
@@ -18,7 +18,7 @@ public class SpotifyFMRunner extends Runner {
   }
 
   void calculateYearlyMoods() {
-    calculator = new SpotifyFMCalculator();
+    calculator = new SpotifyFMCalculationContainer();
     calculator.calculateYearlyMoods();
   }
 
