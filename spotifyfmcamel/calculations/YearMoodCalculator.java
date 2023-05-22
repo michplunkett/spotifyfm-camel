@@ -7,7 +7,7 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class YearMoodCalculator extends MoodCalculatorStrategy {
-  final String unitPrintString = "the year of ";
+  final static String unitPrintString = "the year of ";
 
   public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);

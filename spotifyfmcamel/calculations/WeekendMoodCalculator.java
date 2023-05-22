@@ -12,7 +12,7 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class WeekendMoodCalculator extends MoodCalculatorStrategy {
-  final String unitPrintString = "Weekends in ";
+  static final String unitPrintString = "Weekends in ";
   final ArrayList<DayOfWeek> weekendDays =
       new ArrayList<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
 

@@ -13,9 +13,7 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
-  final String unitPrintString = "Workdays in ";
-  final LocalTime workStart = LocalTime.parse("09:00:00");
-  final LocalTime workEnd = LocalTime.parse("17:00:00");
+  final static String unitPrintString = "Workdays in ";
   final ArrayList<DayOfWeek> weekdays =
       new ArrayList<>(
           Arrays.asList(
