@@ -28,6 +28,7 @@ public class SpotifyFMRunner extends Runner {
   }
 
   void runMessengerSystem() throws Exception {
+    routeContainer = new SpotifyFMRouteContainer();
     routeContainer.setUpConnection();
     routeContainer.runRoutes();
   }
