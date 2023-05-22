@@ -67,7 +67,9 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                 .convertBodyTo(String.class)
                 .to("file:data/output/");
             try {
-              Thread.sleep(5000);
+              // There are somewhere around 100k+ messages that will be going through the
+              // system, so the sleep will be longer than the standard time.
+              Thread.sleep(70000);
             } catch (InterruptedException e) {
               throw new Exception("The ActiveMQ queue was interrupted.");
             }
@@ -78,11 +80,8 @@ public class SpotifyFMRouteContainer extends RouteContainer {
   public void runRoutes() throws Exception {
     // Start the route and let it do its thing.
     context.start();
-    // I increased the sleep time on recommendation from Alan since I all of my messages
-    // weren't going through when the value was 60000. There are somewhere around 100k+
-    // messages that will be going through the system, so the sleep will be longer than
-    // the standard time.
-    Thread.sleep(60000);
+
+    Thread.sleep(5000);
 
     // Stop the CamelContext.
     context.stop();
