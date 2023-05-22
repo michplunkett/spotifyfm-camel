@@ -76,6 +76,12 @@ public class SpotifyFMRouteContainer extends RouteContainer {
             from(songQueue)
                 .unmarshal()
                 .json(JsonLibrary.Jackson)
+                .choice()
+                .when(body().contains("\"spotifyID\":\"\""))
+                .to(deadLetterQueue)
+                .when(body().contains("\"valence\":0.0"))
+                .to(deadLetterQueue)
+                .otherwise()
                 .process(
                     new Processor() {
                       public void process(Exchange e) throws IOException {
@@ -86,7 +92,8 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                         SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
                         trackListingHandler.addFullyQualifiedTrack(m);
                       }
-                    });
+                    })
+                .endChoice();
             from(deadLetterQueue)
                 .marshal()
                 .json(JsonLibrary.Jackson)
