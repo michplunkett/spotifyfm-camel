@@ -1,4 +1,4 @@
-/** This abstract class serves as the basis for the top level of the Facade. */
+/** This abstract class serves as the basis for the top level of the Facade EIP. */
 package spotifyfmcamel.facades;
 
 public abstract class Runner {

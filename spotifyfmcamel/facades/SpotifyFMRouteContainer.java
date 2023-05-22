@@ -1,3 +1,4 @@
+/** This class is the implementation of the Facade EIP for the Apache Camel routes. */
 package spotifyfmcamel.facades;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,14 +18,12 @@ import spotifyfmcamel.data.SpotifySearchStringHandler;
 import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public class SpotifyFMRouteContainer extends RouteContainer {
-  // create CamelContext
   static final String brokerURL = "tcp://localhost:61616";
   static final String songQueue = "jms:queue:SPOTIFYFM_SONGSWITHINFO";
   static final String deadLetterQueue = "jms:queue:SPOTIFYFM_DEADLETTER";
   static final ObjectMapper mapper = new ObjectMapper();
   CamelContext context;
 
-  // connect to ActiveMQ JMS broker listening on localhost on port 61616
   ConnectionFactory connectionFactory;
 
   public SpotifyFMRouteContainer() throws Exception {

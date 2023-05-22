@@ -1,3 +1,7 @@
+/**
+ * This class is the top-level implementation of the Facade EIP for the application and is class
+ * through which the whole application runs.
+ */
 package spotifyfmcamel.facades;
 
 import java.util.ArrayList;
