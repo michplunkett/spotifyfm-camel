@@ -16,12 +16,15 @@ public class WeekendMoodCalculator extends MoodCalculatorStrategy {
   final ArrayList<DayOfWeek> weekendDays =
       new ArrayList<>(Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
 
+  // Function that handles mood calculation operations.
   public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
     float[] metrics = calculateMood(relevantMessages);
     printCalculation(unitPrintString + year, metrics[0], metrics[1]);
   }
 
+  // Function that filters for messages with listenDates that were during the weekend in a given
+  // year.
   ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
     SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
