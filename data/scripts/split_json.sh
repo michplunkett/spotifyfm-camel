@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# Split a JSON into multiple files. Uses jq.
+# This script was used because the LastFM track listing originally came in a JSON
+# array, meaning all tracks would be submitted through Camel in one large
+# group. Concisely, this script breaks the entire array of 150k+ tracks into
+# individual files.
 
 # Usage
 # ./split_json.sh /path/to/json/file
