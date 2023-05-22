@@ -20,11 +20,11 @@ public class SpotifySearchStringHandler extends DataHandler {
 
   private Map<String, String> searchStringToID;
 
-  private SpotifySearchStringHandler() {
+  private SpotifySearchStringHandler() throws Exception {
     readInData();
   }
 
-  public static synchronized SpotifySearchStringHandler getInstance() {
+  public static synchronized SpotifySearchStringHandler getInstance() throws Exception {
     if (instance == null) {
       return instance = new SpotifySearchStringHandler();
     }
@@ -32,8 +32,11 @@ public class SpotifySearchStringHandler extends DataHandler {
     return instance;
   }
 
+  // Function that adds the SpotifyID to a message if its search string is contained in the
+  // searchStringToID map and returns true if a SpotifyID was added.
   public boolean getSongID(SpotifyFMMessage m) {
     String key = m.getArtist() + " " + m.getAlbumName() + " " + m.getName();
+    // Add class name to Message History.
     m.addToHistory(this.getClass().getName());
     if (searchStringToID.containsKey(key)) {
       m.setSpotifyID(searchStringToID.get(key));
@@ -43,9 +46,8 @@ public class SpotifySearchStringHandler extends DataHandler {
   }
 
   @Override
-  void readInData() {
+  void readInData() throws Exception {
     try {
-      // Instantiate FileReader for spotifySearchStringToSongID.json
       File file = new File("./data/stores/spotifySearchStringToSongID.json");
       String jsonString = FileUtils.getContentsAsString(file);
       Gson gson = new Gson();
@@ -53,9 +55,9 @@ public class SpotifySearchStringHandler extends DataHandler {
       Type gsonMap = new TypeToken<HashMap<String, String>>() {}.getType();
       searchStringToID = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     }
   }
 }

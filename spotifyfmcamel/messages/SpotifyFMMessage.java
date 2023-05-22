@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
   "spotifyID",
   "valence"
 })
-@JsonIgnoreProperties(value = { "listenDateTime" })
+@JsonIgnoreProperties(value = {"listenDateTime"})
 public class SpotifyFMMessage extends Message {
   DateTimeFormatter localDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 
@@ -70,6 +70,7 @@ public class SpotifyFMMessage extends Message {
     return artist;
   }
 
+  // Function that takes the listenDate and formats it into a LocalDateTime.
   public LocalDateTime getListenDateTime() {
     return LocalDateTime.parse(listenDate, localDateTimeFormatter);
   }

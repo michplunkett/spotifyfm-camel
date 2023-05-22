@@ -13,9 +13,9 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
-  final String unitPrintString = "Workdays in ";
-  final LocalTime workStart = LocalTime.parse("09:00:00");
-  final LocalTime workEnd = LocalTime.parse("17:00:00");
+  static final String unitPrintString = "Workdays in ";
+  static final LocalTime workStart = LocalTime.parse("09:00:00");
+  static final LocalTime workEnd = LocalTime.parse("17:00:00");
   final ArrayList<DayOfWeek> weekdays =
       new ArrayList<>(
           Arrays.asList(
@@ -25,18 +25,13 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
               DayOfWeek.THURSDAY,
               DayOfWeek.FRIDAY));
 
+  // Function that determines if a given time is within the
   public static boolean isBetween(LocalTime testListenTime) {
-    final LocalTime workStart = LocalTime.parse("09:00:00");
-    final LocalTime workEnd = LocalTime.parse("17:00:00");
-    return workStart.isAfter(testListenTime) && workEnd.isBefore(testListenTime);
+    return testListenTime.isAfter(workStart) && testListenTime.isBefore(workEnd);
   }
 
-  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
-    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
-    float[] metrics = calculateMood(relevantMessages);
-    printCalculation(unitPrintString + year, metrics[0], metrics[1]);
-  }
-
+  // Function that filters for messages with listenDates that were during the standard workday in a
+  // given year.
   ArrayList<SpotifyFMMessage> getRelevantMessages(ArrayList<SpotifyFMMessage> messages, int year) {
     ArrayList<SpotifyFMMessage> relevantMessages = new ArrayList<>();
     SpotifyFMMessageIterator iterator = new SpotifyFMMessageIterator(messages);
@@ -51,5 +46,12 @@ public class WorkDayMoodCalculator extends MoodCalculatorStrategy {
     }
 
     return relevantMessages;
+  }
+
+  void printCalculation(float mean, float standardDeviation, int year) {
+    String durationString = unitPrintString + year;
+    System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
+    System.out.printf(
+        "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
   }
 }

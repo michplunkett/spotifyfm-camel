@@ -1,6 +1,6 @@
 /**
- * This Interface class serves as baseline structure for the Strategies that will be implemented in
- * the other _Calculator classes.
+ * This Interface class serves as baseline structure for the Strategies as well as a Template that
+ * will be implemented in the other _Calculator classes.
  */
 package spotifyfmcamel.calculations;
 
@@ -9,8 +9,14 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 
 public abstract class MoodCalculatorStrategy {
 
-  public abstract void calculate(ArrayList<SpotifyFMMessage> messages, int year);
+  // Function signature for the mood calculation.
+  public void calculate(ArrayList<SpotifyFMMessage> messages, int year) {
+    ArrayList<SpotifyFMMessage> relevantMessages = getRelevantMessages(messages, year);
+    float[] metrics = calculateMood(relevantMessages);
+    printCalculation(metrics[0], metrics[1], year);
+  }
 
+  // Function signature for getting the relevant messages for a given timeframe.
   abstract ArrayList<SpotifyFMMessage> getRelevantMessages(
       ArrayList<SpotifyFMMessage> messages, int year);
 
@@ -19,6 +25,7 @@ public abstract class MoodCalculatorStrategy {
     float meanDiffs = 0.0F;
     int length = messages.size();
 
+    // Exits the function early if there are not any messages to prevent a divide by 0 error.
     if (length == 0) {
       return new float[] {0.0F, 0.0F};
     }
@@ -27,19 +34,18 @@ public abstract class MoodCalculatorStrategy {
       sum += m.getValence();
     }
 
+    // Calculate average valence.
     float mean = (sum / length);
 
     for (SpotifyFMMessage m : messages) {
       meanDiffs += Math.pow(m.getValence() - mean, 2);
     }
+    // Calculate the standard deviation for the valence.
     float standardDeviation = (float) Math.sqrt(meanDiffs / length);
 
     return new float[] {mean, standardDeviation};
   }
 
-  void printCalculation(String durationString, float mean, float standardDeviation) {
-    System.out.printf("The average valence score for %s is %f.\n", durationString, mean);
-    System.out.printf(
-        "The valence score standard deviation for %s is %f.\n", durationString, standardDeviation);
-  }
+  // Print function for all Strategies.
+  abstract void printCalculation(float mean, float standardDeviation, int year);
 }

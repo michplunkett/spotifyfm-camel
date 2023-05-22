@@ -16,6 +16,7 @@ public class SpotifyFMMessageIterator extends Iterator {
   }
 
   public SpotifyFMMessage next() {
+    // Returns null if the index exceeds the size of the ArrayList.
     if (hasNext()) {
       return messages.get(index++);
     }

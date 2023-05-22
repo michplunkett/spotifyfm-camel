@@ -21,7 +21,9 @@ public class LastFMTrackListingHandler {
     return instance;
   }
 
+  // Add fully-qualified track to the trackList ArrayList.
   public void addFullyQualifiedTrack(SpotifyFMMessage m) {
+    // Add class name to Message History.
     m.addToHistory(this.getClass().getName());
     trackList.add(m);
   }

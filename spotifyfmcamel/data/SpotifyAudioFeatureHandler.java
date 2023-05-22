@@ -21,11 +21,11 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
 
   private Map<String, SpotifyAudioFeatures> audioFeaturesMap;
 
-  private SpotifyAudioFeatureHandler() {
+  private SpotifyAudioFeatureHandler() throws Exception {
     readInData();
   }
 
-  public static synchronized SpotifyAudioFeatureHandler getInstance() {
+  public static synchronized SpotifyAudioFeatureHandler getInstance() throws Exception {
     if (instance == null) {
       return instance = new SpotifyAudioFeatureHandler();
     }
@@ -33,8 +33,11 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
     return instance;
   }
 
+  // Function that adds the valence score to a message if its ID is contained in the
+  // audioFeaturesMap map and returns true if a valence score was added.
   public boolean getValence(SpotifyFMMessage m) {
     String spotifyID = m.getSpotifyID();
+    // Add class name to Message History.
     m.addToHistory(this.getClass().getName());
     if (audioFeaturesMap.containsKey(spotifyID)) {
       m.setValence(audioFeaturesMap.get(spotifyID).getValence());
@@ -44,7 +47,7 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
   }
 
   @Override
-  void readInData() {
+  void readInData() throws Exception {
     try {
       File file = new File("./data/stores/spotifyIDToAudioFeature.json");
       String jsonString = FileUtils.getContentsAsString(file);
@@ -53,9 +56,9 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
       Type gsonMap = new TypeToken<HashMap<String, SpotifyAudioFeatures>>() {}.getType();
       audioFeaturesMap = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     }
   }
 }
