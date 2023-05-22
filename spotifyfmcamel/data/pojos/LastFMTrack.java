@@ -1,31 +1,56 @@
 /** This class represents the JSON structures present in the lastFMTrackListing.json file. */
 package spotifyfmcamel.data.pojos;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.annotation.Generated;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+  "AlbumName",
+  "Artist",
+  "ArtistUUID",
+  "Duration",
+  "ListenDate",
+  "LowerCaseArtist",
+  "Name",
+  "PlayCount",
+  "Rank",
+  "SpotifyID"
+})
 @Generated("jsonschema2pojo")
 public class LastFMTrack {
-  @SerializedName("AlbumName")
+
+  @JsonProperty("AlbumName")
   private String albumName;
 
-  @SerializedName("Artist")
+  @JsonProperty("Artist")
   private String artist;
 
-  @SerializedName("ArtistUUID")
+  @JsonProperty("ArtistUUID")
   private String artistUUID;
 
-  @SerializedName("Duration")
+  @JsonProperty("Duration")
   private int duration;
 
-  @SerializedName("ListenDate")
+  @JsonProperty("ListenDate")
   private String listenDate;
 
-  @SerializedName("LowerCaseArtist")
+  @JsonProperty("LowerCaseArtist")
   private String lowerCaseArtist;
 
-  @SerializedName("Name")
+  @JsonProperty("Name")
   private String name;
+
+  @JsonProperty("PlayCount")
+  private int playCount;
+
+  @JsonProperty("Rank")
+  private int rank;
+
+  @JsonProperty("SpotifyID")
+  private String spotifyID;
 
   public String getAlbumName() {
     return albumName;
@@ -81,5 +106,29 @@ public class LastFMTrack {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public int getPlayCount() {
+    return playCount;
+  }
+
+  public void setPlayCount(int playCount) {
+    this.playCount = playCount;
+  }
+
+  public int getRank() {
+    return rank;
+  }
+
+  public void setRank(int rank) {
+    this.rank = rank;
+  }
+
+  public String getSpotifyID() {
+    return spotifyID;
+  }
+
+  public void setSpotifyID(String spotifyID) {
+    this.spotifyID = spotifyID;
   }
 }
