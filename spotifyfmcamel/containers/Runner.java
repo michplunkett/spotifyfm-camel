@@ -1,5 +1,5 @@
 /** This abstract class serves as the basis for the top level of the Facade EIP. */
-package spotifyfmcamel.facades;
+package spotifyfmcamel.containers;
 
 public abstract class Runner {
   abstract void createDataStores();

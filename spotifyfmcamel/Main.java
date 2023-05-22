@@ -1,6 +1,6 @@
 package spotifyfmcamel;
 
-import spotifyfmcamel.facades.SpotifyFMRunner;
+import spotifyfmcamel.containers.SpotifyFMRunner;
 
 public class Main {
   public static void main(String args[]) throws Exception {

@@ -1,5 +1,5 @@
 /** This class is the implementation of the Facade EIP for the mood calculations. */
-package spotifyfmcamel.facades;
+package spotifyfmcamel.containers;
 
 import java.util.ArrayList;
 import spotifyfmcamel.calculations.WeekendMoodCalculator;

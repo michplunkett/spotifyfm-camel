@@ -2,7 +2,7 @@
  * This class represents the base structure for the SpotifyFMCalculationContainer, which is part of
  * the Facade EIP.
  */
-package spotifyfmcamel.facades;
+package spotifyfmcamel.containers;
 
 import java.util.ArrayList;
 

@@ -1,5 +1,5 @@
 /** This class is the implementation of the Facade EIP for the Apache Camel routes. */
-package spotifyfmcamel.facades;
+package spotifyfmcamel.containers;
 
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
