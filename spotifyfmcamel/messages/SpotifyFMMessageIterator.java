@@ -1,7 +1,7 @@
 /**
  * SpotifyFMMessageIterator is an implementation of the Concrete Iterator from the Iterator Pattern.
  */
-package spotifyfmcamel.message;
+package spotifyfmcamel.messages;
 
 import java.util.ArrayList;
 

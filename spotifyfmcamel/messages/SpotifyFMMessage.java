@@ -2,7 +2,7 @@
  * This class is the implementation of Message.java that store all the information that is passed
  * via JMS.
  */
-package spotifyfmcamel.message;
+package spotifyfmcamel.messages;
 
 import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;

@@ -2,7 +2,7 @@
  * This Abstract Class serves as the baseline structure for all messages that will be handled within
  * this message delivery system.
  */
-package spotifyfmcamel.message;
+package spotifyfmcamel.messages;
 
 import java.util.ArrayList;
 
