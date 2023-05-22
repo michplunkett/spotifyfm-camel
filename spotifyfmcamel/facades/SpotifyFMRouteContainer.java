@@ -1,27 +1,22 @@
 /** This class is the implementation of the Facade EIP for the Apache Camel routes. */
 package spotifyfmcamel.facades;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.camel.CamelContext;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.impl.DefaultCamelContext;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import spotifyfmcamel.data.LastFMTrackListingHandler;
-import spotifyfmcamel.data.SpotifyAudioFeatureHandler;
-import spotifyfmcamel.data.SpotifySearchStringHandler;
-import spotifyfmcamel.messages.SpotifyFMMessage;
+import spotifyfmcamel.processors.AudioFeatureEnricher;
+import spotifyfmcamel.processors.FullyQualifiedTrackProcessor;
+import spotifyfmcamel.processors.SpotifySearchToIDEnricher;
 
 public class SpotifyFMRouteContainer extends RouteContainer {
+
   static final String brokerURL = "tcp://localhost:61616";
   static final String songQueue = "jms:queue:SPOTIFYFM_SONGSWITHINFO";
   static final String deadLetterQueue = "jms:queue:SPOTIFYFM_DEADLETTER";
-  static final ObjectMapper mapper = new ObjectMapper();
   CamelContext context;
 
   ConnectionFactory connectionFactory;
@@ -48,29 +43,8 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                         .log("This message is being sent to the DeadLetter topic: ${body}"))
                 .unmarshal()
                 .json(JsonLibrary.Jackson)
-                .process(
-                    new Processor() {
-                      public void process(Exchange e) throws Exception {
-                        SpotifySearchStringHandler searchStringHandler =
-                            SpotifySearchStringHandler.getInstance();
-
-                        String stringBody = mapper.writeValueAsString(e.getIn().getBody());
-                        SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
-                        searchStringHandler.getSongID(m);
-                        if (m.getSpotifyID() == "") {
-                          e.getIn().setBody(mapper.writeValueAsString(m));
-                          throw new Exception();
-                        }
-
-                        SpotifyAudioFeatureHandler audioFeatureHandler =
-                            SpotifyAudioFeatureHandler.getInstance();
-                        boolean hasValence = audioFeatureHandler.getValence(m);
-                        e.getIn().setBody(mapper.writeValueAsString(m));
-                        if (!hasValence) {
-                          throw new Exception();
-                        }
-                      }
-                    })
+                .process(new SpotifySearchToIDEnricher())
+                .process(new AudioFeatureEnricher())
                 .to(songQueue);
             from(songQueue)
                 .unmarshal()
@@ -81,17 +55,7 @@ public class SpotifyFMRouteContainer extends RouteContainer {
                 .when(body().contains("\"valence\":0.0"))
                 .to(deadLetterQueue)
                 .otherwise()
-                .process(
-                    new Processor() {
-                      public void process(Exchange e) throws IOException {
-                        LastFMTrackListingHandler trackListingHandler =
-                            LastFMTrackListingHandler.getInstance();
-
-                        String stringBody = mapper.writeValueAsString(e.getIn().getBody());
-                        SpotifyFMMessage m = mapper.readValue(stringBody, SpotifyFMMessage.class);
-                        trackListingHandler.addFullyQualifiedTrack(m);
-                      }
-                    })
+                .process(new FullyQualifiedTrackProcessor())
                 .endChoice();
             from(deadLetterQueue)
                 .marshal()
