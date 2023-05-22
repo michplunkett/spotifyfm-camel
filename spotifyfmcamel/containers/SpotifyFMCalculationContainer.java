@@ -11,7 +11,7 @@ import spotifyfmcamel.messages.SpotifyFMMessage;
 import spotifyfmcamel.messages.SpotifyFMMessageIterator;
 
 public class SpotifyFMCalculationContainer extends CalculationContainer {
-
+  // Instantiating all needed objects for the container.
   private final LastFMTrackListingHandler trackListingHandler =
       LastFMTrackListingHandler.getInstance();
 
@@ -19,6 +19,7 @@ public class SpotifyFMCalculationContainer extends CalculationContainer {
   private final WorkDayMoodCalculator workday = new WorkDayMoodCalculator();
   private final YearMoodCalculator yearly = new YearMoodCalculator();
 
+  // Collecting all unique years present in the track list.
   ArrayList<Integer> getRelevantYears() {
     ArrayList<SpotifyFMMessage> messages = trackListingHandler.getTrackList();
     ArrayList<Integer> years = new ArrayList<>();
@@ -34,10 +35,12 @@ public class SpotifyFMCalculationContainer extends CalculationContainer {
     return years;
   }
 
+  // Running the messages through the three strategies.
   public void calculateYearlyMoods() {
     ArrayList<SpotifyFMMessage> messages = trackListingHandler.getTrackList();
 
     ArrayList<Integer> years = getRelevantYears();
+    System.out.println("Calculating moods based off of " + messages.size() + " tracks.");
     for (Integer year : years) {
       weekend.calculate(messages, year);
       workday.calculate(messages, year);
