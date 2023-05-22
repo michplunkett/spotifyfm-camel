@@ -6,5 +6,5 @@ package spotifyfmcamel.data;
 
 public abstract class DataHandler {
 
-  abstract void readInData();
+  abstract void readInData() throws Exception;
 }

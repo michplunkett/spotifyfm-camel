@@ -21,11 +21,11 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
 
   private Map<String, SpotifyAudioFeatures> audioFeaturesMap;
 
-  private SpotifyAudioFeatureHandler() {
+  private SpotifyAudioFeatureHandler() throws Exception {
     readInData();
   }
 
-  public static synchronized SpotifyAudioFeatureHandler getInstance() {
+  public static synchronized SpotifyAudioFeatureHandler getInstance() throws Exception {
     if (instance == null) {
       return instance = new SpotifyAudioFeatureHandler();
     }
@@ -47,7 +47,7 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
   }
 
   @Override
-  void readInData() {
+  void readInData() throws Exception {
     try {
       File file = new File("./data/stores/spotifyIDToAudioFeature.json");
       String jsonString = FileUtils.getContentsAsString(file);
@@ -56,9 +56,9 @@ public class SpotifyAudioFeatureHandler extends DataHandler {
       Type gsonMap = new TypeToken<HashMap<String, SpotifyAudioFeatures>>() {}.getType();
       audioFeaturesMap = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     }
   }
 }

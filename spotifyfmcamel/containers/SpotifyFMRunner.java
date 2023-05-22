@@ -22,7 +22,7 @@ public class SpotifyFMRunner extends Runner {
     calculator.calculateYearlyMoods();
   }
 
-  void createDataStores() {
+  void createDataStores() throws Exception {
     SpotifyAudioFeatureHandler.getInstance();
     SpotifySearchStringHandler.getInstance();
   }

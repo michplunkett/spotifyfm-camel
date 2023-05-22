@@ -2,7 +2,7 @@
 package spotifyfmcamel.containers;
 
 public abstract class Runner {
-  abstract void createDataStores();
+  abstract void createDataStores() throws Exception;
 
   abstract void runMessengerSystem() throws Exception;
 

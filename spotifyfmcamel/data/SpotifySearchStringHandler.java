@@ -20,11 +20,11 @@ public class SpotifySearchStringHandler extends DataHandler {
 
   private Map<String, String> searchStringToID;
 
-  private SpotifySearchStringHandler() {
+  private SpotifySearchStringHandler() throws Exception {
     readInData();
   }
 
-  public static synchronized SpotifySearchStringHandler getInstance() {
+  public static synchronized SpotifySearchStringHandler getInstance() throws Exception {
     if (instance == null) {
       return instance = new SpotifySearchStringHandler();
     }
@@ -46,7 +46,7 @@ public class SpotifySearchStringHandler extends DataHandler {
   }
 
   @Override
-  void readInData() {
+  void readInData() throws Exception {
     try {
       File file = new File("./data/stores/spotifySearchStringToSongID.json");
       String jsonString = FileUtils.getContentsAsString(file);
@@ -55,9 +55,9 @@ public class SpotifySearchStringHandler extends DataHandler {
       Type gsonMap = new TypeToken<HashMap<String, String>>() {}.getType();
       searchStringToID = gson.fromJson(jsonString, gsonMap);
     } catch (FileNotFoundException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new Exception(e);
     }
   }
 }
